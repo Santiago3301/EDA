@@ -57,7 +57,7 @@ void alta_tabla_hash(TablaHash *t, Estudiante e, int *exito, int *cant){
 void baja_tabla_hash(TablaHash *t, char code[], int *exito, int *cant){
     int index = hash(code);
     baja_lista_vinculada(&t->tabla[index],code,exito);
-    if(exito) (*cant)++;
+    if(exito) (*cant)--;
 }
 
 void evocacion_tabla_hash(TablaHash t, char code[], int *exito, Estudiante *e){
@@ -71,7 +71,7 @@ void modificar_tabla_hash(TablaHash *t, char code[], int* exito){
     int index = hash(code), modified = 0;
     char buffer[81], c;
     localizar_lista_vinculada(&t->tabla[index], code, exito);
-    if(*exito == -1 || exito == 0) *exito = 0;
+    if(*exito == -1 || *exito == 0) *exito = 0;
     else{
         while(buffer[0] != '0'){
             system("cls");
@@ -94,7 +94,7 @@ void modificar_tabla_hash(TablaHash *t, char code[], int* exito){
                     do{
                         printf("Ingrese nota (entre 0 y 10): ");
                         scanf("%f", &t->tabla[index].cur->e.nota);
-                    }while(getchar() != '\n' || t->tabla[index].cur->e.nota < 0 || t->tabla[index].acc->e.nota > 10);
+                    }while(getchar() != '\n' || t->tabla[index].cur->e.nota < 0 || t->tabla[index].cur->e.nota > 10);
                     modified = 1;
                     break;
                 case 'a':

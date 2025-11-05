@@ -7,8 +7,8 @@ void llenarEstructura(int set[], RAC *rac, int N){
   printf("N = %d\n", N);
   for(int i=0; i<N; i++){
     exito = alta_RAC(rac, set[i]);
-    if(exito) printf("Se cargo el numero %d\n", set[i]);
-    else printf("No se pudo cargar el numero %d\n");
+    if(exito == 1) printf("Se cargo el numero %d\n", set[i]);
+    else printf("No se pudo cargar el numero %d\n", set[i]);
   }
 }
 

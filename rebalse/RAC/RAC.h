@@ -32,12 +32,22 @@ int localizar_RAC(RAC rebalse_cuadratico, int x){
   int index = hash(x);
   int k = 1;
   int cont = 0; //consultas
-  while(rebalse_cuadratico.tabla[index].x != x && cont < rebalse_cuadratico.ult){
-    if(rebalse_cuadratico.tabla[index].estado == virgen) return index;
+  while(rebalse_cuadratico.tabla[index].x != x && cont < MRAC){
+    if(rebalse_cuadratico.tabla[index].estado == virgen) {
+      printf("celda: %d -> estado: virgen\n", index);
+      return index;
+    }
+    printf("celda: %d -> estado: ", index);
+    if(rebalse_cuadratico.tabla[index].estado == ocupada) printf("ocupada\n");
+    else if (rebalse_cuadratico.tabla[index].estado == libre) printf("libre\n");
     index = (index+k) % MRAC;
     cont++;
     k++;
   }
+  printf("se consultaron %d celdas. Celda %d -> estado: ", cont, index);
+  if(rebalse_cuadratico.tabla[index].estado == ocupada) printf("ocupada\n");
+  else if(rebalse_cuadratico.tabla[index].estado == libre) printf("libre\n");
+  else printf("virgen\n");
   return index;
 }
 
@@ -75,7 +85,7 @@ int evocacion_RAC(RAC rebalse_cuadratico, int x){ //como las nuplas son solo x -
 }
 
 void mostrar_RAC(RAC rebalse_cuadratico){
-  printf("Mostrando Rebalse Abierto Lineal:\n");
+  printf("Mostrando Rebalse Abierto Cuadratico:\n");
   printf("[ ");
   for(int i=0; i<MRAC; i++){
     printf("%d", i);

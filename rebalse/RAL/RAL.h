@@ -1,7 +1,7 @@
 #ifndef RAL_H_
 #define RAL_H_
 
-#define MRAL 10
+#define MRAL 7
 
 #define virgen '*'
 #define libre '-'

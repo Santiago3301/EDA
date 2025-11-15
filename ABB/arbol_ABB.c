@@ -8,7 +8,7 @@ int main(){
   int costo = 0;
   float X[] = {80,75,29,4,11,6,23,2,18,24};
   int n = 10;
-  printf("insersion\n");
+  printf("insercion\n");
   int exito;
   for(int i=0; i<n; i++){
     costo = 0;
@@ -38,7 +38,7 @@ int main(){
     localizarABB(&arbol, X_frac[i], &costos_frac[i]);
     printf("%d ", costos_frac[i]);
   }
-  printf("]\n\n");
+  printf("]\n\n"); 
 
   treeprint(arbol.raiz, 0);
   return 0;

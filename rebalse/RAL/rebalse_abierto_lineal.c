@@ -14,7 +14,7 @@ void llenarEstructura(int set[], RAL *ral, int N){
 
 int main(){
   RAL ral;
-  int X[] = {1, 5, 3, 8, 7, 32, 89, 10, 2, 25};
+  int X[] = {1,8,27,6,125,3,216,49,5,343};
   int N = sizeof(X)/sizeof(int);
   printf("Arreglo:\n[ ");
   for(int i=0; i<N; i++){

@@ -1,0 +1,139 @@
+#ifndef SKIPLIST_H
+#define SKIPLIST_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+
+#define MAX_LEVEL 3 
+#define WIDTH 8
+
+typedef struct n{
+  int x; //asociante
+  int y; //info asociada 
+  struct n* next[MAX_LEVEL+1];
+}Nodo;
+
+typedef struct{
+  int nivel; //maximo nivel utilizado
+  Nodo *acc;
+}SKIPLIST;
+
+void init_skiplist(SKIPLIST *sl){
+  sl->nivel = 0;
+  sl->acc = (Nodo*)malloc(sizeof(Nodo));
+  sl->acc->x = -999999;
+  sl->acc->y = -999999;
+  
+  for(int i=0; i<=MAX_LEVEL; i++){
+    sl->acc->next[i] = NULL;
+  }
+}
+
+void localizar_skiplist(SKIPLIST sl, int x, Nodo *update[], int *exito){
+  for(int i=0; i<=MAX_LEVEL; i++){
+    update[i] = sl.acc;
+  }
+  Nodo *cur = sl.acc;
+  int nivel = sl.nivel;
+  for(int i=nivel; i>=0; i--){
+    while(cur->next[i] != NULL && cur->next[i]->x < x){
+      cur = cur->next[i];
+    }
+    update[i] = cur;
+  }
+  cur = cur->next[0];
+  if(cur != NULL && cur->x == x){
+    *exito = 1;
+  }
+  else{
+    *exito = 0;
+  }
+}
+
+Nodo* crear_nodo(int x, int y){
+  Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+  nuevo->x = x;
+  nuevo->y = y;
+
+  for(int i=0; i<=MAX_LEVEL; i++)
+    nuevo->next[i] = NULL;
+
+  return nuevo;
+}
+
+int obtener_nivel(){
+  int n = 0;
+  while((rand()/(double)RAND_MAX) < 0.5 && n < MAX_LEVEL){
+    n++;
+  }
+  return n;
+}
+
+void alta_skiplist(SKIPLIST *sl, int x, int y, int *exito){
+  Nodo* update[MAX_LEVEL+1];
+  localizar_skiplist(*sl, x, update, exito);
+  if(*exito == 1){
+    *exito = 0;
+  }
+  else{
+    Nodo* nuevo = crear_nodo(x, y);
+    int nivel = obtener_nivel();
+    printf("nivel: %d\n", nivel);
+    for(int i=0; i<=nivel; i++){
+      nuevo->next[i] = update[i]->next[i];
+      update[i]->next[i] = nuevo;
+    }
+
+    if(nivel > sl->nivel){
+      sl->nivel = nivel;
+    }
+    
+    *exito = 1;
+    printf("se inserto %d\n", x);
+  }
+}
+
+int digitos(int x) {
+    if (x == 0) return 1;
+    int d = 0;
+    while (x != 0) {
+        x /= 10;
+        d++;
+    }
+    return d;
+}
+
+void mostrar_skiplist(SKIPLIST sl){
+  Nodo* cur = sl.acc->next[0];
+  Nodo* nivel0[10];
+  int count = 0;
+  
+  while(cur != NULL){
+    nivel0[count] = cur;
+    cur = cur->next[0];
+    count++;
+  }
+
+  for(int i=MAX_LEVEL; i>=0; i--){
+    Nodo *cur = sl.acc->next[i];
+    int index = 0;
+
+    printf("[%d]--", i);
+
+    while(index < count){
+      if(cur != NULL && cur->x == nivel0[index]->x){
+        int x = cur->x;
+        printf(">[%d]--", x);
+        cur = cur->next[i];
+      }else{
+        printf("------");
+      }
+      index++;
+    }
+
+    printf(">[+inf]\n");
+
+  }
+}
+
+#endif

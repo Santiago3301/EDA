@@ -78,7 +78,6 @@ void alta_skiplist(SKIPLIST *sl, int x, int y, int *exito){
   else{
     Nodo* nuevo = crear_nodo(x, y);
     int nivel = obtener_nivel();
-    printf("nivel: %d\n", nivel);
     for(int i=0; i<=nivel; i++){
       nuevo->next[i] = update[i]->next[i];
       update[i]->next[i] = nuevo;
@@ -89,7 +88,6 @@ void alta_skiplist(SKIPLIST *sl, int x, int y, int *exito){
     }
     
     *exito = 1;
-    printf("se inserto %d\n", x);
   }
 }
 
@@ -114,7 +112,7 @@ void mostrar_skiplist(SKIPLIST sl){
     count++;
   }
 
-  for(int i=MAX_LEVEL; i>=0; i--){
+  for(int i=0; i<=MAX_LEVEL; i++){
     Nodo *cur = sl.acc->next[i];
     int index = 0;
 
@@ -126,7 +124,12 @@ void mostrar_skiplist(SKIPLIST sl){
         printf(">[%d]--", x);
         cur = cur->next[i];
       }else{
-        printf("------");
+        int d = digitos(nivel0[index]->x);
+        printf("-----");
+        while(d>0){
+          printf("-");
+          d--;
+        }
       }
       index++;
     }

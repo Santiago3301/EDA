@@ -89,6 +89,8 @@ void mostrar_RAC(RAC rebalse_cuadratico){
   printf("[ ");
   for(int i=0; i<MRAC; i++){
     printf("%d", i);
+    if(rebalse_cuadratico.tabla[i].x > 10) printf(" ");
+    if(rebalse_cuadratico.tabla[i].x > 100) printf(" ");
     if(i < MRAC-1) printf(" | ");
   }
   printf(" ]\n");
@@ -99,7 +101,7 @@ void mostrar_RAC(RAC rebalse_cuadratico){
     else printf("%c", rebalse_cuadratico.tabla[i].estado);
     if(i < MRAC-1) printf(" | ");
   }
-  printf(" ]");
+  printf(" ]\n");
 }
 
 #endif //RAL_H_

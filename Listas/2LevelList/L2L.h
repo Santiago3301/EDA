@@ -163,7 +163,10 @@ void alta_L2L(L2L *lista, Nupla X, int *exito){
 void mostrarDescriptores(L2L lista){
     printf("[| ");
     for(int i=0; i < lista.ult+1; i++){
-         printf("%d | ", i);
+         printf("%d ", i);
+         if(lista.ListaDescriptores[i].xd >= 10){
+           printf(" | ");
+         }else printf("| ");
     }
     printf("|]\n");
     printf("[| ");

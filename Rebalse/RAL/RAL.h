@@ -83,7 +83,7 @@ void mostrar_RAL(RAL rebalse_lineal){
     else printf("%c", rebalse_lineal.tabla[i].estado);
     if(i < MRAL-1) printf(" | ");
   }
-  printf(" ]");
+  printf(" ]\n");
 }
 
 #endif //RAL_H_

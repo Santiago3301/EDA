@@ -1,6 +1,6 @@
 #ifndef LSO_H
 #define LSO_H
-#define MAX_SUBLISTA 5
+#define MAX_LSO 5
 
 typedef struct {
     int x;
@@ -8,7 +8,7 @@ typedef struct {
 } Nupla;
 
 typedef struct {
-    Nupla lista[MAX_SUBLISTA];
+    Nupla lista[MAX_LSO];
     int ult;
 } LSO;
 
@@ -48,7 +48,7 @@ void localizar_LSO(LSO l, int x, int *pos, int *exito){
 
 void alta_LSO(LSO *l, Nupla X, int *exito){
     //Caso 1: sublista llena
-    if(l->ult == MAX_SUBLISTA-1){
+    if(l->ult == MAX_LSO-1){
         *exito = -1;
         return; 
     }

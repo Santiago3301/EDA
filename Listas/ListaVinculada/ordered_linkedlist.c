@@ -130,10 +130,12 @@ void alta(int x, Lista *lista, int *exito){
     printf("\nNo se pudo añadir el elemento :'v\n");
   }else {
     Nodo* nuevo = crear_nodo(x);
+    //Caso 1: x es menor al primer elemento 
     if(lista->acc == lista->cur){
       nuevo->sig = lista->acc;
       lista->acc = nuevo;
     }else{
+      //Caso 2: insertar en posicion intermedia
       nuevo->sig = lista->cur;
       lista->aux->sig = nuevo;
     }

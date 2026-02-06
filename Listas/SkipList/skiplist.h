@@ -7,20 +7,20 @@
 #define MAX_LEVEL 3 
 #define WIDTH 8
 
-typedef struct n{
+typedef struct nodoSL{
   int x; //asociante
   int y; //info asociada 
-  struct n* next[MAX_LEVEL+1];
-}Nodo;
+  struct nodoSL* next[MAX_LEVEL+1];
+}NodoSL;
 
 typedef struct{
   int nivel; //maximo nivel utilizado
-  Nodo *acc;
+  NodoSL *acc;
 }SKIPLIST;
 
 void init_skiplist(SKIPLIST *sl){
   sl->nivel = 0;
-  sl->acc = (Nodo*)malloc(sizeof(Nodo));
+  sl->acc = (NodoSL*)malloc(sizeof(NodoSL));
   sl->acc->x = -999999;
   sl->acc->y = -999999;
   
@@ -29,11 +29,11 @@ void init_skiplist(SKIPLIST *sl){
   }
 }
 
-void localizar_skiplist(SKIPLIST sl, int x, Nodo *update[], int *exito){
+void localizar_skiplist(SKIPLIST sl, int x, NodoSL *update[], int *exito){
   for(int i=0; i<=MAX_LEVEL; i++){
     update[i] = sl.acc;
   }
-  Nodo *cur = sl.acc;
+  NodoSL *cur = sl.acc;
   int nivel = sl.nivel;
   for(int i=nivel; i>=0; i--){
     while(cur->next[i] != NULL && cur->next[i]->x < x){
@@ -50,8 +50,8 @@ void localizar_skiplist(SKIPLIST sl, int x, Nodo *update[], int *exito){
   }
 }
 
-Nodo* crear_nodo(int x, int y){
-  Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+NodoSL* crear_nodoSL(int x, int y){
+  NodoSL *nuevo = (NodoSL *)malloc(sizeof(NodoSL));
   nuevo->x = x;
   nuevo->y = y;
 
@@ -70,13 +70,13 @@ int obtener_nivel(){
 }
 
 void alta_skiplist(SKIPLIST *sl, int x, int y, int *exito){
-  Nodo* update[MAX_LEVEL+1];
+  NodoSL* update[MAX_LEVEL+1];
   localizar_skiplist(*sl, x, update, exito);
   if(*exito == 1){
     *exito = 0;
   }
   else{
-    Nodo* nuevo = crear_nodo(x, y);
+    NodoSL* nuevo = crear_nodoSL(x, y);
     int nivel = obtener_nivel();
     for(int i=0; i<=nivel; i++){
       nuevo->next[i] = update[i]->next[i];
@@ -102,8 +102,8 @@ int digitos(int x) {
 }
 
 void mostrar_skiplist(SKIPLIST sl){
-  Nodo* cur = sl.acc->next[0];
-  Nodo* nivel0[10];
+  NodoSL* cur = sl.acc->next[0];
+  NodoSL* nivel0[10];
   int count = 0;
   
   while(cur != NULL){
@@ -113,7 +113,7 @@ void mostrar_skiplist(SKIPLIST sl){
   }
 
   for(int i=0; i<=MAX_LEVEL; i++){
-    Nodo *cur = sl.acc->next[i];
+    NodoSL *cur = sl.acc->next[i];
     int index = 0;
 
     printf("[%d]--", i);

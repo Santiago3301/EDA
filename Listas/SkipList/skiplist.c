@@ -2,12 +2,14 @@
 #include "skiplist.h"
 #include <time.h>
 
+#include "../../utils.h"
+
 typedef struct{
   int x;
   int y;
 }nupla;
 
-int main(){
+int testSkipList(){
   srand(time(NULL));
   int N = 9;
   nupla X[N];
@@ -25,5 +27,8 @@ int main(){
     mostrar_skiplist(sl);
     printf("\n");
   }
+
+  pause();
+  pause();
   return 0;
 }

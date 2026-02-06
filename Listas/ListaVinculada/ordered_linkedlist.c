@@ -6,38 +6,35 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-typedef struct n{
-  int valor;
-  struct n* sig;
-}Nodo;
+#include "../../utils.h"
+#include "nodo.h"
 
 typedef struct{
   Nodo* acc;
   Nodo* cur;
   Nodo* aux;
-}Lista;
+}LVO;
 
-int isEmpty(Lista lista);
-void init(Lista *lista);
-void vaciar(Lista *lista);
-void localizar(int x, Lista *lista, int *exito);
-Nodo* crear_nodo(int val_nuevo);
-void alta(int x, Lista *lista, int *exito);
-void baja(int x, Lista *lista, int *exito);
-void mostrar(Lista lista);
+int isEmptyLVO(LVO lista);
+void initLVO(LVO *lista);
+void vaciarLVO(LVO *lista);
+void localizarLVO(int x, LVO *lista, int *exito);
+void altaLVO(int x, LVO *lista, int *exito);
+void bajaLVO(int x, LVO *lista, int *exito);
+void mostrarLVO(LVO lista);
 
-int main(){  
+int menuLVO(int system_clear_option){  
   int x = 1;
-  Lista lista;
-  init(&lista);
+  LVO lista;
+  initLVO(&lista);
   int exito;
   int opc = 1;
 
   while(opc != 0){
-    system("clear");
+    clear(system_clear_option);
     printf("Lista Vinculada Ordenada!\n");
     printf("Tipo: Numeros Enteros\n");
-    mostrar(lista);
+    mostrarLVO(lista);
     printf("Seleccione una opcion:\n");
     printf("1. Insertar un elemento\n");
     printf("2. Eliminar un elemento\n");
@@ -49,16 +46,14 @@ int main(){
         case 1:
             printf("\nIngrese elemento a insertar: ");
             scanf("%d", &x);
-            alta(x, &lista, &exito);
-            getchar();
-            getchar();
+            altaLVO(x, &lista, &exito);
+            pause();
             break;
         case 2:
             printf("\nIngrese elemento a eliminar: ");
             scanf("%d", &x);
-            baja(x, &lista, &exito);
-            getchar();
-            getchar();
+            bajaLVO(x, &lista, &exito);
+            pause();
             break;
         case 0: break;
         default: break;
@@ -66,26 +61,26 @@ int main(){
 
   }
 
-  printf("Gracias por usar, vuelva prontos!\n");
-  vaciar(&lista);
+  //printf("Gracias por usar, vuelva prontos!\n");
+  vaciarLVO(&lista);
 
 }
 
-int isEmpty(Lista lista){
+int isEmptyLVO(LVO lista){
   return (lista.acc->sig == NULL);
 }
 
-void init(Lista *lista){
+void initLVO(LVO *lista){
   lista->acc = lista->cur = lista->aux = NULL;
 }
 
-void reset(Lista *lista){
+void resetLVO(LVO *lista){
   lista->cur = lista->acc;
   lista->aux = lista->acc;
 }
 
-void vaciar(Lista *lista){
-  reset(lista);
+void vaciarLVO(LVO *lista){
+  resetLVO(lista);
   while(lista->cur != NULL){
     lista->acc = lista->cur->sig;
     free(lista->cur);
@@ -93,8 +88,8 @@ void vaciar(Lista *lista){
   }
 }
 
-void mostrar(Lista lista){
-  reset(&lista);
+void mostrarLVO(LVO lista){
+  resetLVO(&lista);
   printf("Lista: o--> ");
   while(lista.cur != NULL){
     printf("[%d|o]--> ", lista.cur->valor);
@@ -103,8 +98,8 @@ void mostrar(Lista lista){
   printf("|Ii\n");
 }
 
-void localizar(int x, Lista *lista, int *exito){
-  reset(lista);
+void localizarLVO(int x, LVO *lista, int *exito){
+  resetLVO(lista);
   while(lista->cur != NULL && lista->cur->valor < x){
     lista->aux = lista->cur;
     lista->cur = lista->cur->sig;
@@ -117,19 +112,17 @@ void localizar(int x, Lista *lista, int *exito){
   }
 }
 
-Nodo* crear_nodo(int val_nuevo){
-  Nodo* nuevo = malloc(sizeof(Nodo));
-  nuevo->valor = val_nuevo;
-  nuevo->sig = NULL;
-  return nuevo;
-}
-
-void alta(int x, Lista *lista, int *exito){
-  localizar(x, lista, exito);
+void altaLVO(int x, LVO *lista, int *exito){
+  localizarLVO(x, lista, exito);
   if(*exito == 1){
-    printf("\nNo se pudo añadir el elemento :'v\n");
+    printf("\nEl elemento %d ya se encuentra en la lista\n", x);
   }else {
     Nodo* nuevo = crear_nodo(x);
+    if(nuevo == NULL){
+      printf("\nMemoria insuficiente\n");
+      *exito = -1;
+      return;
+    }
     //Caso 1: x es menor al primer elemento 
     if(lista->acc == lista->cur){
       nuevo->sig = lista->acc;
@@ -140,11 +133,12 @@ void alta(int x, Lista *lista, int *exito){
       lista->aux->sig = nuevo;
     }
     printf("\nElemento agregado ;v\n");
+    *exito = 1;
   }
 }
 
-void baja(int x, Lista *lista, int *exito){
-  localizar(x, lista, exito);
+void bajaLVO(int x, LVO *lista, int *exito){
+  localizarLVO(x, lista, exito);
   if(*exito == 1){
     //caso 1: primer elemento
     if(lista->acc == lista->cur){
@@ -157,7 +151,7 @@ void baja(int x, Lista *lista, int *exito){
     free(lista->cur);
     printf("\nSe elimino el elemento %d ;v\n", x);
   }else{
-    printf("\nNo se encontro %d en la estrucutura. Matate y grabalo\n", x);
+    printf("\nNo se encontro %d en la estructura. Matate y grabalo\n", x);
     *exito = 0;
   }
 }

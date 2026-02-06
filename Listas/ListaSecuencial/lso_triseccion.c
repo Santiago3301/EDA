@@ -1,31 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../../utils.h"
+
 #define MAX 10
 
 typedef struct{
     int V[MAX];
     int ult;
-}Lista;
+}LSO;
 
-void init(Lista *lista);
-void localizar(Lista lista, int x, int *pos, int *exito);
-void alta(Lista *lista, int x, int *exito);
-void baja(Lista *lista, int x, int *exito);
-void mostrar(Lista lista);
+void initLSO(LSO *lista);
+void localizarLSO(LSO lista, int x, int *pos, int *exito);
+void altaLSO(LSO *lista, int x, int *exito);
+void bajaLSO(LSO *lista, int x, int *exito);
+void mostrarLSO(LSO lista);
 
-int main(){
-    Lista lista;
+int menuLSO(int system_clear_option){
+    LSO lista;
     int x = 1;
     int exito;
     int opc = 1;
 
-    init(&lista);
+    initLSO(&lista);
 
     while(opc != 0){
-        system("clear");
+        clear(system_clear_option);
         printf("Lista Secuencial Ordenada! (busqueda por triseccion)\nTipo: Numeros Enteros\nMAX = %d\n", MAX);
-        mostrar(lista);
+        mostrarLSO(lista);
         printf("Seleccione una opcion:\n");
         printf("1. Insertar un elemento\n");
         printf("2. Eliminar un elemento\n");
@@ -37,16 +39,14 @@ int main(){
             case 1:
                 printf("\nIngrese elemento a insertar: ");
                 scanf("%d", &x);
-                alta(&lista, x, &exito);
-                getchar();
-                getchar();
+                altaLSO(&lista, x, &exito);
+                pause();
                 break;
             case 2:
                 printf("\nIngrese elemento a eliminar: ");
                 scanf("%d", &x);
-                baja(&lista, x, &exito);
-                getchar();
-                getchar();
+                bajaLSO(&lista, x, &exito);
+                pause();
                 break;
             case 0: break;
             default: break;
@@ -59,14 +59,14 @@ int main(){
     return 0;
 }
 
-void init(Lista *lista){
+void initLSO(LSO *lista){
     lista->ult = -1;
     for(int i=0; i<MAX ; i++){
         lista->V[i] = -999;
     }
 }
 
-void localizar(Lista lista, int x, int *pos, int *exito){
+void localizarLSO(LSO lista, int x, int *pos, int *exito){
     int li = 0;
     int ls = lista.ult; 
     int m = (li + ls)/2;
@@ -80,14 +80,13 @@ void localizar(Lista lista, int x, int *pos, int *exito){
     else *pos = li;
 }
 
-void alta(Lista *lista, int x, int *exito){
+void altaLSO(LSO *lista, int x, int *exito){
     int pos;
     *exito = 0;
-    localizar(*lista, x, &pos, exito);
+    localizarLSO(*lista, x, &pos, exito);
     if(*exito == 1){
         printf("Ya esta el %d en la lista. Matate y grabalo.\n", x);
-        getchar();
-        getchar();
+        pause();
     }else if(lista->ult < MAX-1){
         for(int i = lista->ult + 1; i>pos; i--){
             lista->V[i] = lista->V[i-1];
@@ -99,10 +98,10 @@ void alta(Lista *lista, int x, int *exito){
     }else printf("No hay espacio :'v");
 }
 
-void baja(Lista *lista, int x, int *exito){
+void bajaLSO(LSO *lista, int x, int *exito){
     int pos;
     *exito = 0;
-    localizar(*lista, x, &pos, exito);
+    localizarLSO(*lista, x, &pos, exito);
     if(*exito == 0){
         printf("No se encontro %d en la lista. Matate y grabalo", x);
     }else{
@@ -117,7 +116,7 @@ void baja(Lista *lista, int x, int *exito){
     }
 }
 
-void mostrar(Lista lista){
+void mostrarLSO(LSO lista){
     printf("Lista: [ ");
     int i = 0;
     while(i < lista.ult){

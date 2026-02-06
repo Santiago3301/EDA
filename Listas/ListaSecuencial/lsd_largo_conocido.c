@@ -1,35 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../../utils.h"
+
 #define MAX 10
 
 typedef struct{
     int V[MAX];
     int ult;
-}Lista;
+}LSD;
 
-void init(Lista *lista);
-void localizar(Lista lista, int x, int *pos, int *exito);
-void alta(Lista *lista, int x, int *exito);
-void baja(Lista *lista, int x, int *exito);
-void mostrar(Lista lista);
+void initLSD(LSD *lista);
+void localizarLSD(LSD lista, int x, int *pos, int *exito);
+void altaLSD(LSD *lista, int x, int *exito);
+void bajaLSD(LSD *lista, int x, int *exito);
+void mostrarLSD(LSD lista);
 
-int main(){
-    Lista lista;
+int menuLSD(int system_clear_option){
+    LSD lista;
     int opc = 1;
     int exito;
     int x = 0;
 
-    init(&lista);
+    initLSD(&lista);
 
     while(opc != 0){
-        system("clear");
-        printf("Lista Secuencial!\nTipo: Numeros Enteros\nMAX = %d\n", MAX);
-        mostrar(lista);
+        clear(system_clear_option);
+        printf("Lista Secuencial Desordenada\nTipo: Numeros Enteros\nMAX = %d\n", MAX);
+        mostrarLSD(lista);
         printf("Seleccione una opcion:\n");
         printf("1. Insertar un elemento\n");
         printf("2. Eliminar un elemento\n");
-        printf("0. Salir\n");
+        printf("0. Volver\n");
         printf("\nOpcion: ");
         scanf("%d", &opc);
     
@@ -37,35 +39,33 @@ int main(){
             case 1:
                 printf("\nIngrese elemento a insertar: ");
                 scanf("%d", &x);
-                alta(&lista, x, &exito);
-                getchar();
-                getchar();
+                altaLSD(&lista, x, &exito);
+                pause();
                 break;
             case 2:
                 printf("\nIngrese elemento a eliminar: ");
                 scanf("%d", &x);
-                baja(&lista, x, &exito);
-                getchar();
-                getchar();
+                bajaLSD(&lista, x, &exito);
+                pause();
                 break;
             case 0: break;
             default: break;
         }
 
     }
-    printf("\nGracias por usar. Vuelva prontos!\n");
+    //printf("\nGracias por usar. Vuelva prontos!\n");
 
     return 0;
 }
 
-void init(Lista *lista){
+void initLSD(LSD *lista){
     lista->ult = -1;
     for(int i=0; i<MAX ; i++){
         lista->V[i] = -999;
     }
 }
 
-void localizar(Lista lista, int x, int *pos, int *exito){
+void localizarLSD(LSD lista, int x, int *pos, int *exito){
     *pos = 0;
     while(*pos <= lista.ult && lista.V[*pos] != x){
         *pos += 1;
@@ -73,10 +73,10 @@ void localizar(Lista lista, int x, int *pos, int *exito){
     *exito = (lista.V[*pos] == x);
 }
 
-void alta(Lista *lista, int x, int *exito){
+void altaLSD(LSD *lista, int x, int *exito){
     int pos;
     *exito = 0;
-    localizar(*lista, x, &pos, exito);
+    localizarLSD(*lista, x, &pos, exito);
     if(*exito == 1){
         printf("Ya esta el %d en la lista. Matate y grabalo.\n", x);
     }else if(lista->ult < MAX-1){
@@ -87,10 +87,10 @@ void alta(Lista *lista, int x, int *exito){
     }else printf("No hay espacio :'v\n");
 }
 
-void baja(Lista *lista, int x, int *exito){
+void bajaLSD(LSD *lista, int x, int *exito){
     int pos;
     *exito = 0;
-    localizar(*lista, x, &pos, exito);
+    localizarLSD(*lista, x, &pos, exito);
     if(*exito == 0){
         printf("No se encontro %d en la lista. Matate y grabalo\n", x);
     }else{
@@ -101,7 +101,7 @@ void baja(Lista *lista, int x, int *exito){
     }
 }
 
-void mostrar(Lista lista){
+void mostrarLSD(LSD lista){
     printf("Lista: [ ");
     int i = 0;
     while(i < lista.ult){

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "L2L.h"
 
+#include "../../utils.h"
+
 void leerArchivo(L2L *lista){
     FILE *fp = fopen("secuencia.txt", "r");
     Nupla X;
@@ -24,7 +26,7 @@ void leerArchivo(L2L *lista){
     fclose(fp);
 }
 
-int main(){
+int usoL2L(int system_clear_menu){
     L2L lista;
     init_L2L(&lista);
 

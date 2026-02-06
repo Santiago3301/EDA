@@ -1,31 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "abb.h"
+#include "avl.h"
 
 void clear(int x){
     if(x == 1) system("cls");
     else system("clear");
 }
 
-int menuABB(){
-    ABB arbol;
-    initABB(&arbol);
+int main(){
+
+    Nodo* raiz = NULL;
+
     int opc = 1;
     int x;
-    int exito;
+    int exito = 0;
 
-    int system_clear_option = 2; //Linux 
+    int system_clear_option = 2; 
 
     while(opc != 0){
         clear(system_clear_option);
 
-        printf("Arbol Binario de Busqueda!\n");
+        printf("Arbol Binario Balanceado (AVL)!\n");
         printf("Tipo: Enteros\n");
         printf("Arbol: \n");
-        barridoPorNiveles(arbol);
+        barridoPorNiveles(raiz);
         printf("\n1. Insertar un elemento\n");
         printf("2. Eliminar un elemento\n");
         printf("3. Mostrar arbol (Treeprint)\n");
+        printf("4. Mostrar arbol (print2D)\n");
         printf("0. Salir\n");
         printf("Opcion: ");
 
@@ -35,7 +37,7 @@ int menuABB(){
             case 1:
                 printf("\nIngrese el elemento a insertar: ");
                 scanf("%d", &x);
-                altaABB(&arbol, x, &exito);
+                raiz = altaAVL(raiz, x, &exito);
                 getchar();
                 getchar();
                 break;
@@ -43,22 +45,29 @@ int menuABB(){
             case 2:
                 printf("\nIngrese el elemento a eliminar: ");
                 scanf("%d", &x);
-                bajaABB(&arbol, x, &exito);
+                raiz = bajaAVL(raiz, x, &exito);
                 getchar();
                 getchar();
                 break;
 
             case 3:
-                treeprint(arbol.raiz, 0);
+                treeprint(raiz, 0);
                 getchar();
                 getchar();
+                break;
+
+            case 4:
+                print2D(raiz, ESPACIO);
+                getchar();
+                getchar();
+
             case 0:
                 break;
         }
 
     }
     
-    liberarABB(arbol.raiz);
+    liberarAVL(raiz);
     printf("Gracias por usar, vuelva prontos!\n");
 
 

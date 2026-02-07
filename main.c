@@ -26,7 +26,6 @@ int main(){
     switch(opc){
       case 1:
           menuListas(system_clear_option);
-          pause();
           break;
       case 2:
           printf("\nud. selecciono arboles\n");

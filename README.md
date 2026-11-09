@@ -2,7 +2,7 @@
 Estructuras de Datos y Algoritmos - UNSL 2025
 
 - main.c: programa principal para ver las demostraciones de las distintas Estructuras
-- Por el momento sólo funciona la demostración de Listas, el uso del resto de las estructuras
+- Por el momento solo funciona la demostración de Listas, el uso del resto de las estructuras
   es manual
 
 Como usar:
